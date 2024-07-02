@@ -20,4 +20,28 @@ function divide (divide1,divide2) {
 
  };
 
+let value1; //will coresspond to 'argument1'
+let operator; // will correspond to function needed to invoke
+let value2; //will correspond to 'argument2'
+
+function operate(val1,oper,val2) {
+   if (oper === "+") { 
+    return add(val1,val2);
+} else if(oper === "-") { 
+    return subtract(val1,val2) ;
+} else if (oper === "*") { 
+    return multiply(val1,val2);
+
+} else if (oper === "/") { 
+    return divide(val1,val2);
+}
+
+ };
+
+ let test = operate(4,"-",5);
+
+ console.log(test);
+
+ 
+
 
