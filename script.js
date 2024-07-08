@@ -49,7 +49,10 @@ function operate(val1,oper,val2) {
  //enter number into display
  // store number in variable for future use
 
- let displayValue;
+ let displayText;
+ let displayNum;
+//  let displayValue; 
+
  let val1Holder;
  let val2Holder;
  let operatorHolder;
@@ -64,120 +67,165 @@ calculator.addEventListener("click", function (event) {
 
 let target = event.target;
 
+
 function updateDisplay(number) {
-    if (display.textContent === "0") {
+    if (typeof displayNum === "undefined") {  // 1st step, nothing in display
         display.textContent = number;
-    } else {
+        displayText = display.textContent;
+        displayNum = Number(displayText);
+        console.log(displayNum);
+        console.log(typeof displayNum);
+
+
+    }  else if (typeof displayNum === "number") { // 2nd step, there is something in display but not in operator holder  
         display.textContent += number;
-    }
+        displayText = display.textContent;
+        displayNum = Number(displayText);
+        console.log(displayNum);
+        console.log(typeof displayNum);
+
+    } else if(typeof operatorHolder !== "undefined") { 
+        display.textContent = number;
+        displayText = display.textContent;
+        displayNum = Number(displayText);
+        console.log(displayNum);
+        console.log(typeof displayNum);
+
+    } else if (typeof operatorHolder !== "undefined" && typeof displayNum !== "NaN") {
+
+        display.textContent = number;
+        displayText = display.textContent;
+        displayNum = Number(displayText);
+        console.log(displayNum);
+        console.log(typeof displayNum);
+
+    } 
+
+
 } // helper to keep common logic outside of switch cases
 
-function updateHolders(number) { 
-    if (typeof val1Holder === "undefined") { 
-        val1Holder = number;
-        return val1Holder;
-    } else {
-        val2Holder = number;
-        return val2Holder;
-    } 
-}
 
 switch (target.className) {
     case "nine": 
-       updateDisplay("9");
-       displayValue = 9;
-       updateHolders(displayValue);
-       console.log(displayValue);
+       updateDisplay("9"); 
+    //    displayText= display.textContent;
+    // //    displayNum = Number(display.textContent);
+    // //    console.log(displayNum);
+    // //    console.log(typeof displayNum);
     break;
 
     case "eight": 
         updateDisplay("8");
-        displayValue = 8;
-        updateHolders(displayValue);
-        console.log(displayValue);
+    //     displayText = display.textContent;
+    //     displayNum = Number(display.textContent);
+    //    console.log(displayNum);
+    //    console.log(typeof displayNum);
     break; 
 
     case "seven": 
        updateDisplay("7");
-       displayValue = 7;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "six": 
        updateDisplay("6");
-       displayValue = 6;
-       updateHolders(displayValue);
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "five": 
        updateDisplay("5");
-       displayValue = 5;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "four": 
        updateDisplay("4");
-       displayValue = 4;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "three": 
        updateDisplay("3");
-       displayValue = 3;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "two": 
        updateDisplay("2");
-       displayValue = 2;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "one": 
        updateDisplay("1");
-       displayValue = 1;
-       updateHolders(displayValue);
-       console.log(displayValue);
+    //    displayValue = Number(display.textContent);
+    //    updateHolders(displayValue);
+    //    console.log(displayValue);
     break;
 
     case "zero": 
         display.textContent = "0";
-        displayValue = 0;
-        updateHolders(displayValue);
-        console.log(displayValue);
+        //  displayValue = Number(display.textContent);``
+        // updateHolders(displayValue);
+        // console.log(displayValue);
 
  }
 
 });
 
+console.log(typeof displayNum);
+
+// function to store the operator holder
+
 calculator.addEventListener("click", function (event) {
     let target = event.target;
+
+    function updateHolders(number) { 
+        if (typeof val1Holder === "undefined") { 
+            val1Holder = number;
+            console.log(val1Holder);
+            displayNum = '';
+
+            return val1Holder;
+        } else {
+            val2Holder = number;
+            console.log(val1Holder,val2Holder);
+            return val2Holder;
+        } 
+    }
 
     switch (target.className) {
         case "add":
             operatorHolder = add;
+            updateHolders(displayNum);
             console.log(operatorHolder);
+            console.log(displayNum);
+            
         break;
         
         case "subtract":
             operatorHolder = subtract;
+            updateHolders(displayNum);
             console.log(operatorHolder);
         break;
 
         case "multiply":
             operatorHolder = multiply;
+            updateHolders(displayNum);
             console.log(operatorHolder);
         break;
 
         case "divide":
             operatorHolder = divide;
+            updateHolders(displayNum);
             console.log(operatorHolder);
         break;
     }
@@ -187,17 +235,26 @@ calculator.addEventListener("click", function (event) {
 let equals = document.querySelector(".equals");
 
 equals.addEventListener("click", function () { 
-    if (typeof val1Holder !== "undefined" && typeof val2Holder !== "undefined" || typeof operatorHolder !== "undefined" ) { 
-        console.log(val1Holder,val2Holder);
+    if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
+       val2Holder = displayNum;
+       displayNum = '';
        let result = operatorHolder(val1Holder,val2Holder);
-
         display.textContent = result;
-        val1Holder = undefined;
-        val2= undefined;
+        val1Holder = Number(result);
+        console.log(typeof result, result);
+        val2Holder= undefined;
         operatorHolder = undefined;
+    } else if (typeof val1Holder === "number" && val2Holder === "" ) {
+        val2Holder = displayNum;
+        displayNum = '';
+        let result = operatorHolder(val1Holder,val2Holder);
+        display.textContent = result;
+        val1Holder = Number(result);
+        console.log(typeof result, result);
     }
 
 }
+
 );
 
 
@@ -245,6 +302,68 @@ equals.addEventListener("click", function () {
 
 // let equals = operatorHolder(val1,val2);
 
+
+//reset display with clicked number if 0. if another number already 
+       // there concatenates. 
+
+       //pseudo 
+        //press 9
+        // if 0 is there then display 9
+        // displayText = "9" 
+        // displayNum = 9
+        // if number already on display, concatenate 
+        // displayText = "99"
+        //displayNum = 99
+        // when operator button pressed
+        // assign operator func to operatorHolder
+        // reset displayNum = 0;
+        // keep displaying displayText until the next number pressed
+        // related to displayLogic may need to seperate displayText func and 
+        // displayNum func
+
+        // what i'm trying to do is once the operator button has been pressed,
+        // to reset the current displayValue, but still have the text displayed
+        // until the second digit is pressed??
+        // does this require some sort of conditional on a digit button click? 
+        // if operator is already full then delete num and display and start 
+        // display fresh?? on update display? 
+
+        // pseudo for adding 999 + 8 
+        //button 9 is pressed
+        // nothing prev on display so display becomes "9"
+        //displayNum = 9
+        //displayText = "9"
+        // button 9 is pressed again
+        // display is not 0 so concat
+        // displayText becomes "99"
+        // displayNum becomes 99
+        //button 9 is pressed again
+        // display is not 0 so concat
+        // displayText becomes "999"
+        // displayNum becomes 999
+
+        //      we move to pressing add button
+
+        // add button pressed 
+        // if operator pressed, displayNum becomes val1Holder;
+        // reset displayNum, but keep displayText
+        // on digit click - if val1Holder is not undefined, 
+        //displayText resets to new digit
+        //displayNum becomes new digit
+
+        // what happens when result becomes val1holder.
+        // when I press plus
+
+
+            /// pseudo for storing displayNumbers in arrays 
+            // let displayNumber = empty array
+            // onClick, use array.push to add element to array. 
+            // keep adding if user presses digits.
+
+            // when an operator is pressed, assign "add" (or whatever operator) to 
+            // create  join to turn into string
+            // transform that string into a number
+            // 
 
 
 
