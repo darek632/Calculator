@@ -108,7 +108,7 @@ function updateDisplay(number) {
         console.log(displayNum);
         console.log(typeof displayNum);
 
-    } else if (typeof operatorHolder !== "undefined" && typeof displayNum !== "NaN") {
+    } else if (typeof operatorHolder === "undefined") {
 
         display.textContent = number;
         displayText = display.textContent;
@@ -261,13 +261,23 @@ calculator.addEventListener("click", function (event) {
         } else {
             val2Holder = number;
             console.log(val1Holder,val2Holder);
-            return val2Holder;
+            displayNum = '';
+            let result = operatorHolder(val1Holder,val2Holder);
+            display.textContent = result;
+            val1Holder = Number(result);
+            console.log(typeof result, result);
+            val2Holder= undefined;
+            
+            
         } 
     }
 
     switch (target.className) {
         case "add":
             operatorHolder = add;
+
+           // what do i need to happen here: 
+           // user presses 
             updateHolders(displayNum);
             console.log(operatorHolder);
             console.log(displayNum);
@@ -298,6 +308,8 @@ calculator.addEventListener("click", function (event) {
 let equals = document.querySelector(".equals");
 
 equals.addEventListener("click", function () { 
+
+    
     if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
        val2Holder = displayNum;
        displayNum = '';
@@ -314,9 +326,14 @@ equals.addEventListener("click", function () {
         display.textContent = result;
         val1Holder = Number(result);
         console.log(typeof result, result);
+        
+    } else if ( typeof operatorHolder !== "undefined" && typeof val2Holder === "undefined") { 
+        let result = operatorHolder(val1Holder,val2Holder);
+
     }
 
 }
+
 
 );
 
