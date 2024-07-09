@@ -68,7 +68,11 @@ calculator.addEventListener("click", function (event) {
 let target = event.target;
 
 
-function updateDisplay(number) {
+// helper function to keep common logic outside of switch cases
+function updateDisplay(number) { 
+
+    
+
     if (typeof displayNum === "undefined") {  // 1st step, nothing in display
         display.textContent = number;
         displayText = display.textContent;
@@ -78,6 +82,11 @@ function updateDisplay(number) {
 
 
     }  else if (typeof displayNum === "number") { // 2nd step, there is something in display but not in operator holder  
+            if (displayText.charAt(0) === "0" ) {
+                console.log(displayText);
+                displayText = displayText.slice(1);
+                display.textContent = displayText;
+            }
         display.textContent += number;
         displayText = display.textContent;
         displayNum = Number(displayText);
@@ -85,6 +94,14 @@ function updateDisplay(number) {
         console.log(typeof displayNum);
 
     } else if(typeof operatorHolder !== "undefined") { 
+            if (displayText.charAt(0) === "0") {
+                displayText = displayText.slice(1);
+                display.textContent += number;
+                displayText = display.textContent;
+                displayNum = Number(displayText);
+                console.log(typeof displayNum, displayNum);
+    
+            }
         display.textContent = number;
         displayText = display.textContent;
         displayNum = Number(displayText);
@@ -102,7 +119,7 @@ function updateDisplay(number) {
     } 
 
 
-} // helper to keep common logic outside of switch cases
+} 
 
 
 switch (target.className) {
@@ -172,10 +189,56 @@ switch (target.className) {
     break;
 
     case "zero": 
-        display.textContent = "0";
+        if ((displayText.charAt(0) === "0" && displayText.length == 1)|| typeof displayText === "undefined")  {
+            display.textContent = "0"; 
+            displayText = display.textContent;
+            displayNum = Number(displayText);
+            console.log(typeof displayNum, displayNum);
+            
+        }  else if (typeof operatorHolder !== "undefined"  ) { 
+
+                if (typeof displayNum !== "string" ) { 
+                    display.textContent += "0";
+                    displayText = display.textContent;
+                    displayNum = Number(displayText);
+                    console.log(typeof displayNum, displayNum);
+
+
+                } else { 
+                    display.textContent = "0"
+                    displayText = display.textContent;
+                    displayNum = Number(displayText);
+                    console.log(displayNum);
+                    console.log(typeof displayNum);
+
+                }  
+        } else if (displayText.length > 0 ) {
+
+            display.textContent += "0";
+            displayText = display.textContent;
+            displayNum = Number(displayText);
+            console.log(typeof displayNum, displayNum);
+
+
+    }
+        
+        // else { 
+        //     display.textContent += "0";
+        //     displayText = display.textContent;
+        // displayNum = Number(displayText);
+        // console.log(displayNum);
+        // console.log(typeof displayNum);
+        // }
+
+        
+    
         //  displayValue = Number(display.textContent);``
         // updateHolders(displayValue);
         // console.log(displayValue);
+        //if displayText[0] === "0" then 
+        // displayText becomes "0"
+        // otherwise, the zero gets added like normal. 
+    break;
 
  }
 
