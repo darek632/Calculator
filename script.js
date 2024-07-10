@@ -1,21 +1,30 @@
 function add (add1,add2) {
-  return Number((add1 + add2).toFixed(6));
+  return Number((add1 + Number(add2)).toFixed(6));
 };
 
 function subtract (subtract1, subtract2) {
-     return Number((subtract1 - subtract2).toFixed(6));
+     return Number((subtract1 -  Number(subtract2)).toFixed(6));
 };
 
 function multiply (multiply1, multiply2) {
-    return Number((multiply1 * multiply2).toFixed(6));
+        // accommodating for condition of the val2Holder 
+        // being set to '' after performing a calculation
+        // changing each var to number means emtpy string = 0 but 
+        // this doesn't work for multiplication
+        // unsure how code reaches this path only after previous calculations
+        // have been carried out but not in the first instance. 
+        if (multiply2 === '') { 
+            return Number((multiply1 * 1).toFixed(6));
+        }
 
+    return  Number((multiply1 * Number(multiply2)).toFixed(6))
 };
 
 function divide (divide1,divide2) {
     if (divide2 === 0|| divide1 === 0 ) { 
         return "Busted";
     } else { 
-       return Number((divide1 / divide2).toFixed(6));
+       return Number((divide1 /  Number(divide2)).toFixed(6));
     };
 
  };
@@ -63,6 +72,35 @@ function operate(val1,oper,val2) {
  const display = document.querySelector(".display");
 let calculator = document.querySelector(".calculator");
 
+let isEqualsClicked = false; 
+
+function handleClick() {
+    if (!isEqualsClicked) { 
+
+        if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
+            val2Holder = displayNum;
+            displayNum = '';
+            let result = operatorHolder(val1Holder,val2Holder);
+             display.textContent = result;
+             val1Holder = Number(result);
+             console.log(typeof result, result);
+             val2Holder= '';
+             console.log(typeof val1Holder, val1Holder);
+         } else if (typeof val1Holder === "number" && val2Holder === "" ) {
+             val2Holder = displayNum;
+             displayNum = '';
+             let result = operatorHolder(val1Holder,val2Holder);
+             display.textContent = result;
+             val1Holder = Number(result);
+             console.log(typeof result, result);
+             
+         } 
+        isEqualsClicked = true; 
+    }
+ }
+
+ // after pressing equals i have 
+
 calculator.addEventListener("click", function (event) { 
 
 let target = event.target;
@@ -70,6 +108,7 @@ let target = event.target;
 
 // helper function to keep common logic outside of switch cases
 function updateDisplay(number) { 
+    isEqualsClicked = false;
 
     
 
@@ -189,6 +228,7 @@ switch (target.className) {
     break;
 
     case "zero": 
+        isEqualsClicked = false; 
         if ((displayText.charAt(0) === "0" && displayText.length == 1)|| typeof displayText === "undefined")  {
             display.textContent = "0"; 
             displayText = display.textContent;
@@ -252,12 +292,17 @@ calculator.addEventListener("click", function (event) {
     let target = event.target;
 
     function updateHolders(number) { 
+        
         if (typeof val1Holder === "undefined") { 
             val1Holder = number;
             console.log(val1Holder);
             displayNum = '';
 
             return val1Holder;
+        } else if (val2Holder === '') { 
+         
+
+
         } else {
             val2Holder = number;
             console.log(val1Holder,val2Holder);
@@ -274,31 +319,39 @@ calculator.addEventListener("click", function (event) {
 
     switch (target.className) {
         case "add":
-            operatorHolder = add;
+            isEqualsClicked= false;
+            
 
-           // what do i need to happen here: 
-           // user presses 
+           //what's happening: 
+           // I press 77 
+           // i press + 66 
+
+           
             updateHolders(displayNum);
+            operatorHolder = add;
             console.log(operatorHolder);
             console.log(displayNum);
             
         break;
         
         case "subtract":
-            operatorHolder = subtract;
+            isEqualsClicked= false;
             updateHolders(displayNum);
+            operatorHolder = subtract;
             console.log(operatorHolder);
         break;
 
         case "multiply":
-            operatorHolder = multiply;
+            isEqualsClicked= false;
             updateHolders(displayNum);
+            operatorHolder = multiply;
             console.log(operatorHolder);
         break;
 
         case "divide":
-            operatorHolder = divide;
+            isEqualsClicked= false;
             updateHolders(displayNum);
+            operatorHolder = divide;
             console.log(operatorHolder);
         break;
     }
@@ -310,31 +363,44 @@ let equals = document.querySelector(".equals");
 equals.addEventListener("click", function () { 
 
     
-    if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
-       val2Holder = displayNum;
-       displayNum = '';
-       let result = operatorHolder(val1Holder,val2Holder);
-        display.textContent = result;
-        val1Holder = Number(result);
-        console.log(typeof result, result);
-        val2Holder= undefined;
-        operatorHolder = undefined;
-    } else if (typeof val1Holder === "number" && val2Holder === "" ) {
-        val2Holder = displayNum;
-        displayNum = '';
-        let result = operatorHolder(val1Holder,val2Holder);
-        display.textContent = result;
-        val1Holder = Number(result);
-        console.log(typeof result, result);
-        
-    } else if ( typeof operatorHolder !== "undefined" && typeof val2Holder === "undefined") { 
-        let result = operatorHolder(val1Holder,val2Holder);
+    // if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
+    //     val2Holder = displayNum;
+    //     displayNum = '';
+    //     let result = operatorHolder(val1Holder,val2Holder);
+    //      display.textContent = result;
+    //      val1Holder = Number(result);
+    //      console.log(typeof result, result);
+    //      val2Holder= undefined;
+    //      operatorHolder = undefined;
+    //      console.log(typeof val1Holder, val1Holder);
+    //  } else if (typeof val1Holder === "number" && val2Holder === "" ) {
+    //      val2Holder = displayNum;
+    //      displayNum = '';
+    //      let result = operatorHolder(val1Holder,val2Holder);
+    //      display.textContent = result;
+    //      val1Holder = Number(result);
+    //      console.log(typeof result, result);
+         
+    //  } 
+ 
+ }
 
-    }
+
+);
+
+let clear = document.querySelector(".AC");
+
+clear.addEventListener ("click", function () { 
+
+    displayText = undefined;
+   displayNum = undefined;
+   val1Holder = undefined;
+   val2Holder = undefined;
+   operatorHolder = undefined;
+   isEqualsClicked = false; 
+   display.textContent = "0";
 
 }
-
-
 );
 
 
@@ -444,6 +510,24 @@ equals.addEventListener("click", function () {
             // create  join to turn into string
             // transform that string into a number
             // 
+
+
+ // steps to reproduce 
+    // press: 
+    // 77 
+    // + 
+    // 99 
+    // * (should show) =  176  
+    // 12 
+    // - (should show result of 176*12) = 2112 
+    // 7 
+    // + (shows result of 2112 - 7) = 2105 
+    // 123 
+    // /  (show result of 2105 + 123 ) = 2228 
+    // 4 
+    // - (show result of 2228 / 4) = 557 
+    // 9 
+    // + (shows result of 557 - 9 ) = 548
 
 
 
