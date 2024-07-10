@@ -58,7 +58,7 @@ function operate(val1,oper,val2) {
  //enter number into display
  // store number in variable for future use
 
- let displayText;
+ let displayText = "0";
  let displayNum;
 //  let displayValue; 
 
@@ -233,7 +233,7 @@ switch (target.className) {
             display.textContent = "0"; 
             displayText = display.textContent;
             displayNum = Number(displayText);
-            console.log(typeof displayNum, displayNum);
+            console.log(typeof displayNum, displayNum, typeof displayText);
             
         }  else if (typeof operatorHolder !== "undefined"  ) { 
 
@@ -241,7 +241,7 @@ switch (target.className) {
                     display.textContent += "0";
                     displayText = display.textContent;
                     displayNum = Number(displayText);
-                    console.log(typeof displayNum, displayNum);
+                    console.log(typeof displayNum, displayNum, typeof displayText);
 
 
                 } else { 
@@ -392,14 +392,14 @@ let clear = document.querySelector(".AC");
 
 clear.addEventListener ("click", function () { 
 
-    displayText = undefined;
+    displayText = "0";
    displayNum = undefined;
    val1Holder = undefined;
    val2Holder = undefined;
    operatorHolder = undefined;
    isEqualsClicked = false; 
    display.textContent = "0";
-
+   
 }
 );
 
