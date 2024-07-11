@@ -148,6 +148,11 @@ function updateDisplay(number) {
 
     }  else if (typeof displayNum === "number") { // 2nd step, there is something in display but not in operator holder  
             if (displayText.charAt(0) === "0" ) {
+                    if (displayText.charAt(1)===".") {
+                        display.textContent = "0" + display.textContent;
+                        displayText = display.textContent;
+                        displayNum = Number(displayText);
+                     }
                 console.log(displayText);
                 displayText = displayText.slice(1);
                 display.textContent = displayText;
