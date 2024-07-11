@@ -21,8 +21,13 @@ function multiply (multiply1, multiply2) {
 };
 
 function divide (divide1,divide2) {
+
+    if (divide2 === "" ) { 
+        return Number((divide1 / 1 ).toFixed(6));
+    }
+   
     if (divide2 === 0|| divide1 === 0 ) { 
-        return "Busted";
+        return display.textContent = "n00b";
     } else { 
        return Number((divide1 /  Number(divide2)).toFixed(6));
     };
@@ -74,6 +79,17 @@ let calculator = document.querySelector(".calculator");
 
 let isEqualsClicked = false; 
 
+function bringZeroBack () { 
+    if (displayText.charAt(0) === ".") { 
+        displayText = "0" + displayText;
+        displayNum = Number(displayText);
+    }
+}
+
+let unZero = bringZeroBack();
+
+
+
 function handleClick() {
     if (!isEqualsClicked) { 
 
@@ -82,7 +98,11 @@ function handleClick() {
             displayNum = '';
             let result = operatorHolder(val1Holder,val2Holder);
              display.textContent = result;
-             val1Holder = Number(result);
+             if (result === "n00b") { 
+                val1Holder = undefined;
+            } else { 
+            val1Holder = Number(result);
+            }
              console.log(typeof result, result);
              val2Holder= '';
              console.log(typeof val1Holder, val1Holder);
@@ -91,8 +111,14 @@ function handleClick() {
              displayNum = '';
              let result = operatorHolder(val1Holder,val2Holder);
              display.textContent = result;
-             val1Holder = Number(result);
-             console.log(typeof result, result);
+             if (result === "n00b") { 
+                val1Holder = undefined;
+                console.log(typeof result, result);
+                console.log(typeof displayNum, displayNum);
+            } else { 
+            val1Holder = Number(result);
+            }
+             
              
          } 
         isEqualsClicked = true; 
@@ -109,7 +135,7 @@ let target = event.target;
 // helper function to keep common logic outside of switch cases
 function updateDisplay(number) { 
     isEqualsClicked = false;
-
+    unZero;
     
 
     if (typeof displayNum === "undefined") {  // 1st step, nothing in display
@@ -297,19 +323,35 @@ calculator.addEventListener("click", function (event) {
             val1Holder = number;
             console.log(val1Holder);
             displayNum = '';
+            console.log(val1Holder,val2Holder);
 
             return val1Holder;
-        } else if (val2Holder === '') { 
-         
+        }  else { 
+            // as my 'workaround' when pressing an operator after an equals,
+            // there is only val1holder and val2holder is 'empty', so 
+            // the calculation is performed by replacing empty with '0' (+-) 
+            //or '1' (*/)  to get the same value in val1holder and 
+            // get the operand ready for value, to prevent 'the operand' 
+            // from 'waiting' for another value
 
+                    if (displayNum === '') { 
+                            if (operatorHolder == add || operatorHolder == subtract)  { 
+                                val2Holder = 0;
+                            } else if (operatorHolder == multiply || operatorHolder == divide ) {
+                                val2Holder = 1;
+                            }
+                     } else {val2Holder = number; }
 
-        } else {
-            val2Holder = number;
+            
             console.log(val1Holder,val2Holder);
             displayNum = '';
             let result = operatorHolder(val1Holder,val2Holder);
             display.textContent = result;
+            if (result === "n00b") { 
+                val1Holder = undefined;
+            } else { 
             val1Holder = Number(result);
+            }
             console.log(typeof result, result);
             val2Holder= undefined;
             
@@ -400,6 +442,22 @@ clear.addEventListener ("click", function () {
    isEqualsClicked = false; 
    display.textContent = "0";
    
+}
+);
+
+let decimal = document.querySelector(".decimal");
+
+decimal. addEventListener("click", function () { 
+    displayText = display.textContent;
+
+    // Use includes instead of contains
+    if (displayText.includes(".")) {
+        return displayText;
+    } else { 
+        display.textContent += "."; 
+        displayText = display.textContent;
+        displayNum = Number(displayText);
+    }
 }
 );
 
@@ -530,6 +588,16 @@ clear.addEventListener ("click", function () {
     // + (shows result of 557 - 9 ) = 548
 
 
+    // infinity issue steps to reproduce
+    // 77 (a)
+    // / (b)
+    // 3 (c)
+    // = (d)
+    // / (e)
+    // 2 (f)
+    // = (g)
+    // / = creates infinity??? (h)
+    
 
 
 
