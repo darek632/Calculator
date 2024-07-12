@@ -182,14 +182,13 @@ calculator.addEventListener("click", function (event) {
             displayNum = ''
             console.log(tempVal1)
            tempResult = computation(tempVal1);
+           resultDisplay = divideByZero(tempResult)
+            display.textContent = resultDisplay
             console.log(tempResult,displayText);
-            display.textContent = +tempResult.toFixed(6);
+            // display.textContent = +tempResult.toFixed(6);
             tempVal1 = []
             tempVal1[0] = tempResult;
             tempVal1[1] = operator;
-
-
-
         }
         
      }
@@ -222,6 +221,21 @@ calculator.addEventListener("click", function (event) {
 
 )
 
+function divideByZero (tempResult) {
+
+        if (tempResult === "Busted") { 
+            return "Busted";
+        } else { 
+            return +tempResult.toFixed(6);
+        }
+ }
+
+ // this function will need to be used in conditioning for clearing valHolder1 
+ // so that if busted has been displayed, everything will need to be reset like AC,
+ // apart from the display. TBC 
+
+ let resultDisplay;
+
 let equals = document.querySelector("#equals")
 
 equals.addEventListener("click", function () { 
@@ -234,7 +248,8 @@ equals.addEventListener("click", function () {
     displayNum = +(displayText.join(''))
     tempVal1[2] =  displayNum
     tempResult = computation(tempVal1);
-    display.textContent = +tempResult.toFixed(6);
+    resultDisplay = divideByZero(tempResult)
+    display.textContent = resultDisplay
     displayText = []
     tempVal1 = []
     tempVal1[0] = tempResult
@@ -242,9 +257,6 @@ equals.addEventListener("click", function () {
     }   
 })
 
-// requirements for clear button > 
-// return everything to 'starting' position 
-// 
 
 let decimal = document.getElementById("AC");
 
@@ -257,7 +269,6 @@ function() {
     tempVal1 = [];
     tempVal2 = [];
     display.textContent = "0"
-
 
 }
 )
