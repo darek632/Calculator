@@ -1,21 +1,35 @@
 function add (add1,add2) {
-  return Number((add1 + add2).toFixed(6));
+  return Number((add1 + Number(add2)).toFixed(6));
 };
 
 function subtract (subtract1, subtract2) {
-     return Number((subtract1 - subtract2).toFixed(6));
+     return Number((subtract1 -  Number(subtract2)).toFixed(6));
 };
 
 function multiply (multiply1, multiply2) {
-    return Number((multiply1 * multiply2).toFixed(6));
+        // accommodating for condition of the val2Holder 
+        // being set to '' after performing a calculation
+        // changing each var to number means emtpy string = 0 but 
+        // this doesn't work for multiplication
+        // unsure how code reaches this path only after previous calculations
+        // have been carried out but not in the first instance. 
+        if (multiply2 === '') { 
+            return Number((multiply1 * 1).toFixed(6));
+        }
 
+    return  Number((multiply1 * Number(multiply2)).toFixed(6))
 };
 
 function divide (divide1,divide2) {
+
+    if (divide2 === "" ) { 
+        return Number((divide1 / 1 ).toFixed(6));
+    }
+   
     if (divide2 === 0|| divide1 === 0 ) { 
-        return "Busted";
+        return display.textContent = "n00b";
     } else { 
-       return Number((divide1 / divide2).toFixed(6));
+       return Number((divide1 /  Number(divide2)).toFixed(6));
     };
 
  };
@@ -66,6 +80,56 @@ function operate(val1,oper,val2) {
 
  let calculator = document.querySelector(".calculator");
  let display = document.querySelector("#display")
+
+let isEqualsClicked = false; 
+
+function bringZeroBack () { 
+    if (displayText.charAt(0) === ".") { 
+        displayText = "0" + displayText;
+        displayNum = Number(displayText);
+    }
+}
+
+let unZero = bringZeroBack();
+
+
+
+function handleClick() {
+    if (!isEqualsClicked) { 
+
+        if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
+            val2Holder = displayNum;
+            displayNum = '';
+            let result = operatorHolder(val1Holder,val2Holder);
+             display.textContent = result;
+             if (result === "n00b") { 
+                val1Holder = undefined;
+            } else { 
+            val1Holder = Number(result);
+            }
+             console.log(typeof result, result);
+             val2Holder= '';
+             console.log(typeof val1Holder, val1Holder);
+         } else if (typeof val1Holder === "number" && val2Holder === "" ) {
+             val2Holder = displayNum;
+             displayNum = '';
+             let result = operatorHolder(val1Holder,val2Holder);
+             display.textContent = result;
+             if (result === "n00b") { 
+                val1Holder = undefined;
+                console.log(typeof result, result);
+                console.log(typeof displayNum, displayNum);
+            } else { 
+            val1Holder = Number(result);
+            }
+             
+             
+         } 
+        isEqualsClicked = true; 
+    }
+ }
+
+ // after pressing equals i have 
 
 calculator.addEventListener("click", function (event) { 
 let target = event.target;
