@@ -230,6 +230,38 @@ function divideByZero (tempResult) {
         }
  }
 
+ let decimal = document.getElementById("decimal");
+
+
+ decimal.addEventListener("click", function () { 
+    if (displayText.length === 0 ) { 
+        displayText.push("0",".")
+        display.textContent = displayText.join('');
+        console.log(displayText);
+    } else if (displayText.includes(".")) { 
+        return;
+    } else { 
+        displayText.push(".")
+        display.textContent = displayText.join('');
+
+    }
+ }) 
+
+ // small section about click not sure if EB but if a calculation has been performed and result is being displayed
+ // on screen, when decimal is pressed, the display shows "0." rather than addding 
+ // the decimal to the result 
+ // should be an easy fix if not EB.
+
+
+
+ // what do i want the check to do: 
+
+// basic state add decimal point
+// if decimal point is in the displayText array then do nothing;
+// else if decimal point is at index[0], then add 0 to beginning of index
+
+
+
  // this function will need to be used in conditioning for clearing valHolder1 
  // so that if busted has been displayed, everything will need to be reset like AC,
  // apart from the display. TBC 
@@ -258,9 +290,9 @@ equals.addEventListener("click", function () {
 })
 
 
-let decimal = document.getElementById("AC");
+let clear = document.getElementById("AC");
 
-decimal.addEventListener("click", 
+clear.addEventListener("click", 
 
 function() { 
     displayText = [];
