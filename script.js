@@ -1,13 +1,13 @@
 function add (add1,add2) {
-    return Number((add1 + add2).toFixed(6));
+    return Number((add1 + add2))
   };
   
   function subtract (subtract1, subtract2) {
-       return Number((subtract1 - subtract2).toFixed(6));
+       return Number((subtract1 - subtract2))
   };
   
   function multiply (multiply1, multiply2) {
-      return Number((multiply1 * multiply2).toFixed(6));
+      return Number((multiply1 * multiply2));
   
   };
   
@@ -15,13 +15,13 @@ function add (add1,add2) {
       if (divide2 === 0|| divide1 === 0 ) { 
           return "Busted";
       } else { 
-         return Number((divide1 / divide2).toFixed(6));
+         return Number((divide1 / divide2));
       };
   }
 
-let value1; //will coresspond to 'argument1'
-let operator; // will correspond to function needed to invoke
-let value2; //will correspond to 'argument2'
+
+// basic maths functions 
+
 
 function operate(val1,oper,val2) {
    if (oper === add) { 
@@ -36,6 +36,8 @@ function operate(val1,oper,val2) {
 }
 
  };
+
+ // operate function to store holder values and the specificed maths function
 
 //  let test = operate(4,add,5);
 
@@ -65,8 +67,6 @@ function operate(val1,oper,val2) {
 
  let calculator = document.querySelector(".calculator");
  let display = document.querySelector("#display")
-
-let isEqualsClicked = false; 
 
 
 calculator.addEventListener("click", function (event) { 
@@ -183,7 +183,7 @@ calculator.addEventListener("click", function (event) {
             console.log(tempVal1)
            tempResult = computation(tempVal1);
             console.log(tempResult,displayText);
-            display.textContent = tempResult;
+            display.textContent = +tempResult.toFixed(6);
             tempVal1 = []
             tempVal1[0] = tempResult;
             tempVal1[1] = operator;
@@ -209,11 +209,11 @@ calculator.addEventListener("click", function (event) {
         break;
 
         case "multiply": 
-
+            updateHolders (multiply)
         break;
 
         case "divide": 
-
+            updateHolders (divide)
         break;
 
     }
@@ -226,16 +226,44 @@ let equals = document.querySelector("#equals")
 
 equals.addEventListener("click", function () { 
 
+    console.log(tempVal1)
+
+    if (tempVal1.length < 2 ) { 
+        return;
+    } else { 
     displayNum = +(displayText.join(''))
     tempVal1[2] =  displayNum
     tempResult = computation(tempVal1);
-    display.textContent = tempResult
+    display.textContent = +tempResult.toFixed(6);
+    displayText = []
     tempVal1 = []
     tempVal1[0] = tempResult
     console.log(tempVal1,displayText)
-
-
+    }   
 })
+
+// requirements for clear button > 
+// return everything to 'starting' position 
+// 
+
+let decimal = document.getElementById("AC");
+
+decimal.addEventListener("click", 
+
+function() { 
+    displayText = [];
+    displayNum = ''
+    tempResult = 0;
+    tempVal1 = [];
+    tempVal2 = [];
+    display.textContent = "0"
+
+
+}
+)
+            
+
+
 let calculation = document.getElementById("calculation");
 let myCalculation = document.createElement("p");
 
