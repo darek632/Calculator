@@ -1,38 +1,23 @@
 function add (add1,add2) {
-  return Number((add1 + Number(add2)).toFixed(6));
-};
-
-function subtract (subtract1, subtract2) {
-     return Number((subtract1 -  Number(subtract2)).toFixed(6));
-};
-
-function multiply (multiply1, multiply2) {
-        // accommodating for condition of the val2Holder 
-        // being set to '' after performing a calculation
-        // changing each var to number means emtpy string = 0 but 
-        // this doesn't work for multiplication
-        // unsure how code reaches this path only after previous calculations
-        // have been carried out but not in the first instance. 
-        if (multiply2 === '') { 
-            return Number((multiply1 * 1).toFixed(6));
-        }
-
-    return  Number((multiply1 * Number(multiply2)).toFixed(6))
-};
-
-function divide (divide1,divide2) {
-
-    if (divide2 === "" ) { 
-        return Number((divide1 / 1 ).toFixed(6));
-    }
-   
-    if (divide2 === 0|| divide1 === 0 ) { 
-        return display.textContent = "n00b";
-    } else { 
-       return Number((divide1 /  Number(divide2)).toFixed(6));
-    };
-
- };
+    return Number((add1 + add2).toFixed(6));
+  };
+  
+  function subtract (subtract1, subtract2) {
+       return Number((subtract1 - subtract2).toFixed(6));
+  };
+  
+  function multiply (multiply1, multiply2) {
+      return Number((multiply1 * multiply2).toFixed(6));
+  
+  };
+  
+  function divide (divide1,divide2) {
+      if (divide2 === 0|| divide1 === 0 ) { 
+          return "Busted";
+      } else { 
+         return Number((divide1 / divide2).toFixed(6));
+      };
+  }
 
 let value1; //will coresspond to 'argument1'
 let operator; // will correspond to function needed to invoke
@@ -76,60 +61,13 @@ function operate(val1,oper,val2) {
  let tempVal2 = [];
 
 
- let nine = document.querySelector(".nine");
+
 
  let calculator = document.querySelector(".calculator");
  let display = document.querySelector("#display")
 
 let isEqualsClicked = false; 
 
-function bringZeroBack () { 
-    if (displayText.charAt(0) === ".") { 
-        displayText = "0" + displayText;
-        displayNum = Number(displayText);
-    }
-}
-
-let unZero = bringZeroBack();
-
-
-
-function handleClick() {
-    if (!isEqualsClicked) { 
-
-        if (typeof val1Holder !== "undefined" && typeof val2Holder === "undefined" ) { 
-            val2Holder = displayNum;
-            displayNum = '';
-            let result = operatorHolder(val1Holder,val2Holder);
-             display.textContent = result;
-             if (result === "n00b") { 
-                val1Holder = undefined;
-            } else { 
-            val1Holder = Number(result);
-            }
-             console.log(typeof result, result);
-             val2Holder= '';
-             console.log(typeof val1Holder, val1Holder);
-         } else if (typeof val1Holder === "number" && val2Holder === "" ) {
-             val2Holder = displayNum;
-             displayNum = '';
-             let result = operatorHolder(val1Holder,val2Holder);
-             display.textContent = result;
-             if (result === "n00b") { 
-                val1Holder = undefined;
-                console.log(typeof result, result);
-                console.log(typeof displayNum, displayNum);
-            } else { 
-            val1Holder = Number(result);
-            }
-             
-             
-         } 
-        isEqualsClicked = true; 
-    }
- }
-
- // after pressing equals i have 
 
 calculator.addEventListener("click", function (event) { 
 let target = event.target;
@@ -152,61 +90,41 @@ function updateDisplay(digit) {
 switch (target.id) {
     case "nine": 
        updateDisplay("9");
-    
-
-    
     break;
 
     case "eight": 
         updateDisplay("8");
-     
-        
-        
     break; 
 
     case "seven": 
        updateDisplay("7");
-     
-       
     break;
 
     case "six": 
        updateDisplay("6");
-     
-       
     break;
 
     case "five": 
        updateDisplay("5");
-     
     break;
 
     case "four": 
        updateDisplay("4");
-    
     break;
 
     case "three": 
        updateDisplay("3");
-     
     break;
 
     case "two": 
        updateDisplay("2");
-     
-    
     break;
 
     case "one": 
        updateDisplay("1");
-     
-      
-       
     break;
     case "zero": 
         updateDisplay("0");
-     
-
     break;
 
 
@@ -220,13 +138,10 @@ switch (target.id) {
 
 function computation (holderArray) { 
 
-    if (holderArray.length === 3) { 
+        if (holderArray.length === 3) { 
 
-    return operate(+holderArray[0],holderArray[1],+holderArray[2])
-    }
-
-
-
+            return operate(+holderArray[0],holderArray[1],+holderArray[2])
+        }
  }
 
 calculator.addEventListener("click", function (event) { 
