@@ -305,8 +305,6 @@ function() {
 }
 )
             
-
-
 let calculation = document.getElementById("calculation");
 let myCalculation = document.createElement("p");
 
