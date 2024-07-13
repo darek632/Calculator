@@ -56,16 +56,39 @@ button {
     font-size: 24px;
     border-radius: 4px;
     border-style: solid;
-    border-color: #bf0f1e
+    border-color: #bf0f1e;
 }
 
 .operator, .top-non-number {
     background-color: #27742d;
  }
 
+ .top-non-number:active { 
+    background-color: #149741;
+    transform: translateY(2px);
+}
+.operator:active { 
+    background-color: #149741;
+    border: 2px solid black;
+    transform: translateY(2px);
+}
+
  .operand { 
-    background-color: #ffd700
+    background-color: #ffd700;
  }
+
+ .operand:active {
+    background-color: #e7b307;
+    transform: translateY(2px);
+ }
+
+ /* .highlight { 
+    background-color: #149741;
+    border: 2px solid black;
+    transform: translateY(2px);
+ } */
+
+
 
 
 

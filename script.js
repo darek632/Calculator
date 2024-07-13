@@ -313,7 +313,14 @@ myCalculation.textContent = tempVal1;
 calculation.appendChild(myCalculation);
 
 
+// what do i want to happen: 
+// all but operator buttons to highlight? 
+// when clicked button goes a touch lighter?? 
+// not entirely sure how to do this 
+// for operator buttons - create a black border onClick
 
+
+let highlighters = document.querySelectorAll("operator");
 
 
 
